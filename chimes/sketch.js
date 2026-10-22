@@ -11,6 +11,7 @@ class ColorPixel {
     this.brightness = 0;
     this.prevBrightness = 0;
     this.change = 0;
+    this.glow = 0;
 
     // Screen position
     this.x = 0;
@@ -72,13 +73,18 @@ class ColorPixel {
   }
 
   // Display as rainbow colored rectangle
-  displayAsRainbow() {
-    push();
-    colorMode(HSB);
-    let hsbColor = color(this.hsbValue, 100, 100);
-    fill(hsbColor);
+  // Display as dim gold, with a bright yellow glow when chiming
+  displayAsGold() {
+    fill(this.brightness * 0.15, this.brightness * 0.1, 0);
     rect(this.x, this.y, this.pixelSize, this.pixelSize);
-    pop();
+     if (this.change > 50) {
+      this.glow = max(this.glow, 120);
+    }
+    if (this.glow > 0) {
+      fill(255, 210, 60, this.glow);
+      rect(this.x, this.y, this.pixelSize, this.pixelSize);
+      this.glow -= 5;
+    }
   }
 }
 
@@ -187,7 +193,7 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(15);
 
   // Flip video horizontally (like Zoom)
   translate(width, 0);
@@ -199,6 +205,7 @@ function draw() {
   let totalMotion = 0;
   let splashCount = 0;
   let dropY = -1;
+  let dropX = -1;
   // Update and display each pixel using nested loops
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
@@ -208,18 +215,20 @@ function draw() {
         splashCount++;
         if (random() < 1 / splashCount) {
           dropY = y;
+          dropX = x;
         }
       }
       // Choose display mode:
       // pixelGrid[y][x].displayAsImage();
       // pixelGrid[y][x].displayAsGreyscale();
-      pixelGrid[y][x].displayAsRainbow();
+      pixelGrid[y][x].displayAsGold();
     }
   }
   if (dropY >= 0 && millis() - lastDropTime > random(40, 300)) {
     let index = floor(map(dropY, 0, rows, notes.length - 1, 0));
     let pitch = midiToFreq(notes[index]);
     voices[nextVoice].play(pitch);
+    pixelGrid[dropY][dropX].glow = 255;
     nextVoice = (nextVoice + 1) % voices.length;
     lastDropTime = millis();
   }
