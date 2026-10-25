@@ -13,7 +13,7 @@ A theremin you play by waving.
 - **How much** you move sets the volume. It's silent when you're still and swells when you wave.
 - **Where** you move sets the pitch. Waving high on screen plays a high note, and waving low plays a low one.
 
-### `chimes/`
+### `starlight/`
 Motion wind chimes.
 - Any square that changes a lot is a "splash." Each frame, one splash is picked at random.
 - Its height chooses a note from a pentatonic scale, so random notes always sound good together.
@@ -22,7 +22,7 @@ Motion wind chimes.
 ## How to run
 
 1. In Terminal, from this folder, run `python3 -m http.server 8000`.
-2. Open `http://localhost:8000/theremin/` or `http://localhost:8000/chimes/` in Chrome.
+2. Open `http://localhost:8000/theremin/` or `http://localhost:8000/starlight/` in Chrome.
 3. Allow the camera, then **click the page once** to turn on sound. Browsers block audio until you click.
 
 ## How it hears movement
