@@ -105,7 +105,9 @@ class ChimeVoice {
     this.shimmerEnv.setExp(true);
   }
 
-  play(pitch) {
+  play(pitch, pan) {
+    this.osc.pan(pan);
+    this.shimmer.pan(pan);
     this.osc.freq(pitch);
     this.env.setRange(random(0.08, 0.3), 0);
     this.env.play(this.osc);
@@ -225,8 +227,9 @@ function draw() {
   }
   if (dropY >= 0 && millis() - lastDropTime > random(20, 150)) {
     let index = floor(map(dropX, 0, cols, notes.length - 1, 0));
+    let pan = map(dropX, 0, cols, 1, -1);
     let pitch = midiToFreq(notes[index]);
-    voices[nextVoice].play(pitch);
+    voices[nextVoice].play(pitch, pan);
     pixelGrid[dropY][dropX].glow = 255;
     nextVoice = (nextVoice + 1) % voices.length;
     lastDropTime = millis();
