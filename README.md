@@ -16,7 +16,7 @@ A theremin you play by waving.
 ### `starlight/`
 Motion wind chimes.
 - Any square that changes a lot is a "splash." Each frame, one splash is picked at random.
-- Its height chooses a note from a pentatonic scale, so random notes always sound good together.
+- Its left-to-right position chooses a note from a pentatonic scale (low on the left, high on the right), so sweeping an arm across plays a run like brushing wind chimes, and random notes always sound good together.
 - Six chime voices take turns playing. Each has a main tone plus a quieter shimmer overtone, a random volume, a soft attack and a long ring. The voices overlap and go through a reverb.
 
 ## How to run

@@ -72,10 +72,9 @@ class ColorPixel {
     rect(this.x, this.y, this.pixelSize, this.pixelSize);
   }
 
-  // Display as rainbow colored rectangle
   // Display as dim gold, with a bright yellow glow when chiming
   displayAsGold() {
-    fill(this.brightness * 0.15, this.brightness * 0.1, 0);
+    fill(this.brightness * 0.05, this.brightness * 0.03, 0);
     rect(this.x, this.y, this.pixelSize, this.pixelSize);
      if (this.change > 50) {
       this.glow = max(this.glow, 120);
@@ -83,7 +82,7 @@ class ColorPixel {
     if (this.glow > 0) {
       fill(255, 210, 60, this.glow);
       rect(this.x, this.y, this.pixelSize, this.pixelSize);
-      this.glow -= 5;
+      this.glow -= 6;
     }
   }
 }
@@ -123,7 +122,7 @@ let red, green, blue, yellow, purple, orange, pink, cyan;
 let voices = [];
 let nextVoice = 0;
 let lastDropTime = 0;
-let notes = [76, 79, 81, 84, 86, 88, 91, 93, 96];
+let notes = [67, 69, 72, 74, 76, 79, 81, 84, 86, 88, 91, 93, 96];
 let reverb;
 
 // Video and app dimensions
@@ -224,8 +223,8 @@ function draw() {
       pixelGrid[y][x].displayAsGold();
     }
   }
-  if (dropY >= 0 && millis() - lastDropTime > random(40, 300)) {
-    let index = floor(map(dropY, 0, rows, notes.length - 1, 0));
+  if (dropY >= 0 && millis() - lastDropTime > random(20, 150)) {
+    let index = floor(map(dropX, 0, cols, notes.length - 1, 0));
     let pitch = midiToFreq(notes[index]);
     voices[nextVoice].play(pitch);
     pixelGrid[dropY][dropX].glow = 255;
